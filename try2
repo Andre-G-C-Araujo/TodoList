@@ -1,0 +1,51 @@
+import { useEffect, useState } from 'react';
+
+export const Main = () => {
+  const [list, setList] = useState([]);
+  const [newItem, setNewItem] = useState('');
+
+  useEffect(() => {
+    setList([]);
+  }, []);
+
+  const deletarItem = (index) => {
+    const tmpArray = [...list];
+    tmpArray.splice(index, 1);
+
+    setList(tmpArray);
+  };
+
+  const addNewItem = () => {
+    setList([...list, newItem]);
+    setNewItem('');
+  };
+
+  return (
+    <div>
+      <h1>To do list visto na internet</h1>
+      <input
+        type="text"
+        value={newItem}
+        onChange={(value) => setNewItem(value.target.value)}
+        onKeyDown={(key) => {
+          if (key.keyCode === 13) addNewItem();
+        }}
+      />
+      <button
+        onClick={() => {
+          addNewItem();
+        }}
+      >
+        Add
+      </button>
+      <ul>
+        {list.map((item, index) => (
+          <li key={index}>
+            {item}
+            <button onClick={() => deletarItem(index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};

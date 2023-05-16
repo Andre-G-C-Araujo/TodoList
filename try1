@@ -1,0 +1,132 @@
+import { createElement, useEffect, useState } from 'react';
+
+const form = document.getElementsByName('form');
+console.log(form);
+
+const resultado = () => {
+  const div = document.getElementsByClassName('results');
+  div.appendChild(createLine());
+  createAnotherLine();
+};
+
+const createAnotherLine = () => {
+  const ul = document.getElementsByClassName('results');
+  const contagem = document.getElementsByClassName('counter');
+  const tarefaWord = ul.childElementCount === 1 ? 'Tarefa' : 'Tarefas';
+  contagem.innerText = ul.childElementCount + tarefaWord;
+  console.log(contagem.innerText);
+};
+
+const createLine = () => {
+  if (form.input.value === '') {
+    return errorReturn();
+  }
+
+  const li = document.createElement('li');
+  li.classList.add('limpainput');
+  li.innerText = form.input.value;
+  form.input.value = '';
+  form.input.focus();
+};
+
+const errorReturn = () => {
+  return alert('preencha o campo');
+};
+const seguraSubmit = (e) => {
+  e.preventDefault();
+  const valor = resultado();
+};
+
+const holdEvent = () => {
+  form.addEventListener('submit', (e) => {
+    seguraSubmit(e);
+  });
+};
+
+export const Main = () => {
+  const [tarefas, setTarefas] = useState([]);
+
+  useEffect(() => {
+    holdEvent();
+  }, []);
+
+  return (
+    <>
+      <form name="form" action="/" method="POST">
+        <h1
+          style={{
+            background: 'Blue',
+            fontSize: '30px',
+          }}
+        >
+          To do list
+        </h1>
+        <div className="div1">
+          <input type="text" className="input1" />
+          <button className="btn">Submit</button>
+        </div>
+      </form>
+      <ul className="results"></ul>
+      <div className="counter"></div>
+    </>
+  );
+};
+
+
+
+
+import { createElement, useEffect } from 'react';
+
+const input2 = document.querySelector('.input2');
+const btn2 = document.querySelector('.btn2');
+
+export const Main = () => {
+  const createElement1 = (value) => {
+    const ul = document.getElementsByClassName('results');
+    return;
+  };
+
+  const holdButton = (e) => {
+    e.preventDefault();
+  };
+
+  const sendEnter = (key) => {
+    const value = key.target.value;
+    if (value === '' && key.keyCode === 13) {
+      return alert('Input deve conter um texto');
+    }
+    return createElement1(value);
+  };
+
+  return (
+    <>
+      <form name="form" action="/">
+        <h1
+          style={{
+            background: 'Blue',
+            fontSize: '30px',
+          }}
+        >
+          To do list
+        </h1>
+        <div className="div1">
+          <input
+            type="text"
+            className="input1"
+            onKeyDown={(key) => sendEnter(key)}
+          />
+          <button
+            className="btn"
+            onClick={(e) => {
+              holdButton(e);
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+      <ul className="results"></ul>
+      <div className="tarefas"></div>
+    </>
+  );
+};
